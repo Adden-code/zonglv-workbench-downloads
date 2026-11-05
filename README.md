@@ -4,9 +4,12 @@
 
 ## 下载
 
-- [完整Windows x64安装包](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.0-20261104/ZonglvAuditWorkbench-Setup-0.1.0-windows-x64.exe)
-- [完整便携ZIP](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.0-20261104/ZonglvAuditWorkbench-Portable-0.1.0-windows-x64.zip)
-- [版本页面与校验文件](https://github.com/Adden-code/zonglv-workbench-downloads/releases/tag/windows-v0.1.0-20261104)
+- [0.1.1完整Windows x64安装包](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.1-20261105/ZonglvAuditWorkbench-Setup-0.1.1-windows-x64.exe)
+- [0.1.1完整便携ZIP](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.1-20261105/ZonglvAuditWorkbench-Portable-0.1.1-windows-x64.zip)
+- [单独JAR（需要Java 21）](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.1-20261105/workbench-0.1.1.jar)
+- [版本页面、配置说明与校验文件](https://github.com/Adden-code/zonglv-workbench-downloads/releases/tag/windows-v0.1.1-20261105)
+
+本版修复节点重试/失败续跑、身份归属隔离、可配置超时与限速、系统代理和新目录安装校验。默认连接/读取30/300秒、额外重试2次；耗尽仅对应证据转人工，执行完成不等于全部审核通过。旧版Release保留。
 
 这两个包都含完整工作台、Java 21运行环境和合成KOL材料，无需再安装Java、Python或Node。便携版必须完整解压，不能只运行取出的EXE。
 
@@ -20,7 +23,7 @@
 
 ## 验证边界
 
-已完成Java/前端回归、包结构/哈希检查，以及使用捆绑Java的独立服务启动、样本预检和重启持久化测试。当前构建环境的执行策略阻止新生成原生EXE直接启动，因此原生安装向导、启动器交互和卸载尚未作为实际验收通过；请在目标电脑按单位规范复核。
+已完成Java127项通过/2项可选跳过、前端87项通过，合成14项/6规则连续3轮故障注入完成、失败节点恢复和包结构/哈希检查。捆绑Java独立服务10项、无头原生启动器5项、原生目录校验6项通过。完整安装向导、模型设置交互和卸载GUI仍需在目标电脑按单位规范复核，不能用组件测试代替。
 
 没有调用真实模型、验证内部网络接口或证明业务准确率/ROI。程序未作商业代码签名；若安全软件拦截，请由IT评估准入，不要关闭安全防护。Windows 10/11 x64，启动器需Windows内置.NET Framework 4.x。
 
