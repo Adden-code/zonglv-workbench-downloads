@@ -4,14 +4,16 @@
 
 ## 下载
 
-- [0.1.3完整Windows x64安装包](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.3-20261105/ZonglvAuditWorkbench-Setup-0.1.3-windows-x64.exe)
-- [0.1.3完整便携ZIP](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.3-20261105/ZonglvAuditWorkbench-Portable-0.1.3-windows-x64.zip)
-- [单独JAR（需要Java 21）](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.3-20261105/workbench-0.1.3.jar)
-- [版本页面、配置说明与校验文件](https://github.com/Adden-code/zonglv-workbench-downloads/releases/tag/windows-v0.1.3-20261105)
+- [0.1.4完整Windows x64安装包](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.4-20261106/ZonglvAuditWorkbench-Setup-0.1.4-windows-x64.exe)
+- [0.1.4完整便携ZIP](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.4-20261106/ZonglvAuditWorkbench-Portable-0.1.4-windows-x64.zip)
+- [单独JAR（需要Java 21）](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.4-20261106/workbench-0.1.4.jar)
+- [版本页面、配置说明与校验文件](https://github.com/Adden-code/zonglv-workbench-downloads/releases/tag/windows-v0.1.4-20261106)
 
-本版将SYSTEM-IDENTITY改为“可见主账号名称匹配＋归一后平台一致”；内部KOL ID、主页和发布链接不再充当身份硬门槛。次要账号保留但不参与归属，缺失/矛盾/角色未知/同名多行无法区分仍转人工。独立业务规则保持原语义；预检对KOL ID、主页地址的equals/gte配置作非阻断提醒，不静默改规则。
+本版仅将交付件类型对自身的equals调整为双向包含比较，如“视频”与“60s以上视频”可判类型一致，原值、比较范围和策略可在节点/页面及Excel“字段比较依据”检查。否定、未完成、不明或矛盾数字不自动放行；类型匹配不代表时长等额外要求已核实。其他字段及独立规则保持，semantic仍转人工，不自动改配置。
 
-0.1.2的可疑URL隔离、平台别名和像素预算，以及0.1.1的重试/恢复均保留。账号来源、辅助信息、排除的次要账号可在节点与Excel中检查。升级先停止旧实例、备份数据；已完成结果不重写，评估本版请新建轮次。旧版Release保留。
+互动量本版不增加容差，差异仍按原规则FAIL/待人工裁量；百分比或绝对值及阈值须业务确认后再实现。
+
+0.1.3的主账号身份门/主次账号留存和非阻断规则预警、0.1.2的URL隔离/别名/像素预算，以及0.1.1的重试/恢复均保留。升级先停止旧实例、备份数据；已完成结果不重写，评估本版请新建轮次。旧版Release保留。个人工作台试验不代表IT正式建设进展或业务验收。
 
 这两个包都含完整工作台、Java 21运行环境和合成KOL材料，无需再安装Java、Python或Node。便携版必须完整解压，不能只运行取出的EXE。
 
@@ -25,7 +27,7 @@
 
 ## 验证边界
 
-本轮Java165项通过/2项可选跳过/0失败，前端93项通过；包含合成14项的主次账号、内部ID不同、平台真实差异和独立链接规则回归，以及预检提醒不阻断启动的检查。发行物11项、捆绑Java独立服务12项、无头原生启动器6项、原生目录校验6项通过。完整安装向导、模型设置交互和卸载GUI仍需在目标电脑按单位规范复核，不能用组件测试代替。
+本轮Java182项通过/2项可选跳过/0失败，前端95项通过；包括交付件类型双向包含、否定/冲突护栏、其他字段严格比较、互动量差异不放宽、Excel/节点留痕和1440/390宽度浏览器检查。发行物11项、捆绑Java独立服务13项、无头原生启动器6项、原生目录校验6项通过。完整安装向导、模型设置交互和卸载GUI仍需在目标电脑按单位规范复核，不能用组件测试代替。
 
 上述外部测试没有调用真实模型、验证内部网络接口或证明业务准确率/ROI；格式合法的URL仍可能是幻觉，不能因格式通过就认定真实。程序未作商业代码签名；若安全软件拦截，请由IT评估准入，不要关闭安全防护。Windows 10/11 x64，启动器需Windows内置.NET Framework 4.x。
 
