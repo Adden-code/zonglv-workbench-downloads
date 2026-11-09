@@ -4,14 +4,18 @@
 
 ## 下载
 
-- [0.1.7完整Windows x64安装包](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.7-20261109/ZonglvAuditWorkbench-Setup-0.1.7-windows-x64.exe)
-- [0.1.7完整便携ZIP](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.7-20261109/ZonglvAuditWorkbench-Portable-0.1.7-windows-x64.zip)
-- [单独JAR（需要Java 21）](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.7-20261109/workbench-0.1.7.jar)
-- [版本页面、配置说明与校验文件](https://github.com/Adden-code/zonglv-workbench-downloads/releases/tag/windows-v0.1.7-20261109)
+- [0.1.8完整Windows x64安装包](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.8-20261109/ZonglvAuditWorkbench-Setup-0.1.8-windows-x64.exe)
+- [0.1.8完整便携ZIP](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.8-20261109/ZonglvAuditWorkbench-Portable-0.1.8-windows-x64.zip)
+- [单独JAR（需要Java 21）](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.8-20261109/workbench-0.1.8.jar)
+- [版本页面、配置说明与校验文件](https://github.com/Adden-code/zonglv-workbench-downloads/releases/tag/windows-v0.1.8-20261109)
 
-0.1.7新增“抖音短视频→抖音”，原值保留；微博、视频号与抖音不混同。继续保留“小红书蒲公英→小红书”及显式`likes,comments,collect`（赞评藏）求和，旧赞评转和空参数默认不改，不按平台切换或缺证补0。
+0.1.8针对模型返回`finish_reason=stop`但JSON结构未闭合，在同一退避循环内更换提示：首次重试要求紧凑JSON，再次为最小合规JSON。身份索引、图片分类、字段读取使用对应阶段约束；只省未出现/未读清的可选字段和冗余说明，不能删必填键、已读清的审核字段、图片覆盖和来源。不是拼补JSON，也不回灌残缺答案；未成功仍按原策略降级。先前版本已有通用纠错，本版改为这类失败的专用分级变体。
 
-角色指南区分笔记作者/达人元数据、代理登录与来源水印；Logo作平台而非账号，同图同作品明确时合并发布者/资料卡重复观察，导航/推荐/热搜/评论不污染主体与指标。不按名字或清单期望猜测，unknown/冲突仍人工；没有新增角色模型调用。角色策略可在配置/节点/Excel检查，提示内容会增加输入Token，真实效果仍需复验。
+默认仍为初次请求加2次额外重试，不新增调用层或自动调高预算。长度截断、重复键、多答案及来源错误不会因新变体被放行；429保留当前变体，401仍终止。节点重试明细显示触发原因、实际finish_reason、下次提示模式、前次调用、提示及请求指纹；策略`stop-incomplete-json-variants-v1-20261109`、流程`java-sliced-v1.10-adaptive-json-retry`。成功校验缓存继续复用，旧记录不补造策略或重写结论，评估本版请新建轮次。
+
+0.1.7及更早能力保留：“抖音短视频→抖音”，原值保留；微博、视频号与抖音不混同。继续保留“小红书蒲公英→小红书”及显式`likes,comments,collect`（赞评藏）求和，旧赞评转和空参数默认不改，不按平台切换或缺证补0。
+
+角色指南区分笔记作者/达人元数据、代理登录与来源水印；Logo作平台而非账号，同图同作品明确时合并发布者/资料卡重复观察，导航/推荐/热搜/评论不污染主体与指标。不按名字或清单期望猜测，unknown/冲突仍人工；没有新增角色模型调用。角色策略可在配置/节点/Excel检查。新恢复提示会增加少量输入Token，整体消耗和恢复率仍需同包测量；不承诺缩短或关闭模型内部隐藏思考。
 
 模型content保留单一完整JSON对象去包装与严格校验/退避；多个对象、重复键、未闭合或截断不补写、不充当证据。失败诊断新增实际finish_reason/max_tokens，语法残缺不直接认定Token根因。输出预算`AUDIT_MODEL_MAX_TOKENS`默认8192不变，思考型模型建议在获批网关支持后显式试65536，读取超时独立设置；更高预算可能增加实际耗时/费用，不承诺消除全部截断。
 
@@ -25,7 +29,7 @@
 
 互动量本版不增加容差，差异仍按原规则FAIL/待人工裁量；百分比或绝对值及阈值须业务确认后再实现。
 
-主次账号留存、非阻断规则预警、URL隔离、别名/像素预算和重试/恢复均保留。升级先停止旧实例、备份数据；已有模型设置不改，已完成结果不重写，评估本版请新建轮次。旧0.1.6及更早Release保留。个人工作台试验不代表IT正式建设进展或业务验收。
+主次账号留存、非阻断规则预警、URL隔离、别名/像素预算和重试/恢复均保留。升级先停止旧实例、备份数据；已有模型设置不改，已完成结果不重写，评估本版请新建轮次。旧0.1.7及更早Release保留。个人工作台试验不代表IT正式建设进展或业务验收。
 
 这两个包都含完整工作台、Java 21运行环境和合成KOL材料，无需再安装Java、Python或Node。便携版必须完整解压，不能只运行取出的EXE。
 
@@ -39,7 +43,7 @@
 
 ## 验证边界
 
-本轮Java216项通过/2项可选跳过/0失败，前端100项通过；含合成14/7项固定响应完整链路、65536实际HTTP请求与不完整JSON诊断/退避、原角色/平台护栏及1440/390浏览器检查。发行物11项、捆绑Java独立服务16项、无头原生启动器7项、原生目录校验6项通过。合成链路刻意保留1项差异和1项缺证，不把completed等同全通过。完整安装向导、模型设置交互和卸载GUI仍需在目标电脑按单位规范复核，不能用组件测试代替。
+本轮Java230项通过/2项可选跳过/0失败，前端102项通过；新增14项本地模拟HTTP用例覆盖三阶段original→compact→minimal、来源拒绝、长度/语法反例、缓存、0/3重试上限、429/401边界；65536和原图输入不变。含合成14/7项固定响应完整链路、原角色/平台护栏及1440/390浏览器检查。发行物11项、捆绑Java独立服务17项、无头原生启动器7项、原生目录校验6项通过。合成链路刻意保留1项差异和1项缺证，不把completed等同全通过。完整安装向导、模型设置交互和卸载GUI仍需在目标电脑按单位规范复核，不能用组件测试代替。
 
 上述外部测试没有调用真实模型、验证内部网络接口或证明业务准确率/ROI；格式合法的URL仍可能是幻觉，不能因格式通过就认定真实。程序未作商业代码签名；若安全软件拦截，请由IT评估准入，不要关闭安全防护。Windows 10/11 x64，启动器需Windows内置.NET Framework 4.x。
 
