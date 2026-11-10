@@ -4,14 +4,18 @@
 
 ## 下载
 
-- [0.1.8完整Windows x64安装包](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.8-20261109/ZonglvAuditWorkbench-Setup-0.1.8-windows-x64.exe)
-- [0.1.8完整便携ZIP](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.8-20261109/ZonglvAuditWorkbench-Portable-0.1.8-windows-x64.zip)
-- [单独JAR（需要Java 21）](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.8-20261109/workbench-0.1.8.jar)
-- [版本页面、配置说明与校验文件](https://github.com/Adden-code/zonglv-workbench-downloads/releases/tag/windows-v0.1.8-20261109)
+- [0.1.9完整Windows x64安装包](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.9-20261110/ZonglvAuditWorkbench-Setup-0.1.9-windows-x64.exe)
+- [0.1.9完整便携ZIP](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.9-20261110/ZonglvAuditWorkbench-Portable-0.1.9-windows-x64.zip)
+- [单独JAR（需要Java 21）](https://github.com/Adden-code/zonglv-workbench-downloads/releases/download/windows-v0.1.9-20261110/workbench-0.1.9.jar)
+- [版本页面、配置说明与校验文件](https://github.com/Adden-code/zonglv-workbench-downloads/releases/tag/windows-v0.1.9-20261110)
 
-0.1.8针对模型返回`finish_reason=stop`但JSON结构未闭合，在同一退避循环内更换提示：首次重试要求紧凑JSON，再次为最小合规JSON。身份索引、图片分类、字段读取使用对应阶段约束；只省未出现/未读清的可选字段和冗余说明，不能删必填键、已读清的审核字段、图片覆盖和来源。不是拼补JSON，也不回灌残缺答案；未成功仍按原策略降级。先前版本已有通用纠错，本版改为这类失败的专用分级变体。
+0.1.9新增请求体字节预算`AUDIT_MODEL_MAX_REQUEST_BYTES`，默认3500000十进制字节，独立于像素、Token和超时。先按JSON/UTF-8/base64保守估计，最终在SDK序列化后按实际body字节检查，超限本地阻止。根据用户网关实测选择3.5MB安全值，不把其约4.0至4.2MB阈值推广为所有平台通用事实。
 
-默认仍为初次请求加2次额外重试，不新增调用层或自动调高预算。长度截断、重复键、多答案及来源错误不会因新变体被放行；429保留当前变体，401仍终止。节点重试明细显示触发原因、实际finish_reason、下次提示模式、前次调用、提示及请求指纹；策略`stop-incomplete-json-variants-v1-20261109`、流程`java-sliced-v1.10-adaptive-json-retry`。成功校验缓存继续复用，旧记录不补造策略或重写结论，评估本版请新建轮次。
+优先把原4图批次按字节拆小，分类每批保留context及标注，字段只带本批来源；单批仍超限才等比降采样发送副本。原图不覆盖，PNG/JPEG格式保持、短边不低于min(原短边,512)，无法安全适配就局部降级，不丢图/跨图补字段。节点可看实际字节、预算、原/发尺寸/字节/哈希、派发状态及发送副本。缩小可能影响小字，拆批重复context也可能增加调用和Token，真实质量与成本需原环境复测。
+
+空200 JSON/SSE的全零签名、空体或仅SSE结束标记独立记`empty_upstream_response`，沿原连接类退避，不误当JSON纠错；非空reasoning、非零usage（含嵌套明细）、工具和非null finish不冒充全零响应。缺usage不伪造为0，usage全0不等于未计费。用户已将此前剩余现象定位为网关大包问题，旧解释作为历史保留。
+
+0.1.8的非空stop且JSON未闭合仍用compact/minimal提示；原字段/角色/来源/覆盖校验、默认初次＋2次重试、输出预算不变，不拼补答案或关闭模型隐藏思考。载荷策略`utf8-body-budget-v1-20261110`、流程`java-sliced-v1.11-payload-budget`进入配置/轮次/节点/缓存指纹；旧完成节点不重写，新效果请新建同包轮次验证。
 
 0.1.7及更早能力保留：“抖音短视频→抖音”，原值保留；微博、视频号与抖音不混同。继续保留“小红书蒲公英→小红书”及显式`likes,comments,collect`（赞评藏）求和，旧赞评转和空参数默认不改，不按平台切换或缺证补0。
 
@@ -29,7 +33,7 @@
 
 互动量本版不增加容差，差异仍按原规则FAIL/待人工裁量；百分比或绝对值及阈值须业务确认后再实现。
 
-主次账号留存、非阻断规则预警、URL隔离、别名/像素预算和重试/恢复均保留。升级先停止旧实例、备份数据；已有模型设置不改，已完成结果不重写，评估本版请新建轮次。旧0.1.7及更早Release保留。个人工作台试验不代表IT正式建设进展或业务验收。
+主次账号留存、非阻断规则预警、URL隔离、别名/像素预算和重试/恢复均保留。升级先停止旧实例、备份数据；已有模型设置不改，已完成结果不重写，评估本版请新建轮次。旧0.1.8及更早Release保留。个人工作台试验不代表IT正式建设进展或业务验收。
 
 这两个包都含完整工作台、Java 21运行环境和合成KOL材料，无需再安装Java、Python或Node。便携版必须完整解压，不能只运行取出的EXE。
 
@@ -43,7 +47,7 @@
 
 ## 验证边界
 
-本轮Java230项通过/2项可选跳过/0失败，前端102项通过；新增14项本地模拟HTTP用例覆盖三阶段original→compact→minimal、来源拒绝、长度/语法反例、缓存、0/3重试上限、429/401边界；65536和原图输入不变。含合成14/7项固定响应完整链路、原角色/平台护栏及1440/390浏览器检查。发行物11项、捆绑Java独立服务17项、无头原生启动器7项、原生目录校验6项通过。合成链路刻意保留1项差异和1项缺证，不把completed等同全通过。完整安装向导、模型设置交互和卸载GUI仍需在目标电脑按单位规范复核，不能用组件测试代替。
+本轮Java254项通过/2项可选跳过/0失败，前端104项通过；新增24项覆盖实际UTF-8 body、base64预算、真实Spring客户端拆批、context/来源完整性、失败小批保留、空JSON/SSE/仅DONE及误判反例、PNG/JPEG副本、超长Unicode文本本地拒绝和大响应完整回放；原0.1.8变体/65536/角色/平台/规则护栏回归通过。合成14/7项固定响应链路、三轮韧性及1440/390浏览器检查通过。发行物11项、捆绑Java独立服务18项、无头原生启动器8项、原生目录校验6项通过。合成链路刻意保留1项差异和1项缺证，不把completed等同全通过。完整安装向导、模型设置交互和卸载GUI仍需在目标电脑按单位规范复核，不能用组件测试代替。
 
 上述外部测试没有调用真实模型、验证内部网络接口或证明业务准确率/ROI；格式合法的URL仍可能是幻觉，不能因格式通过就认定真实。程序未作商业代码签名；若安全软件拦截，请由IT评估准入，不要关闭安全防护。Windows 10/11 x64，启动器需Windows内置.NET Framework 4.x。
 
